@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="19A536g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ContactVO" representedClassName="ContactVO" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumberVO" inverseName="contact" inverseEntity="PhoneNumberVO" syncable="YES"/>
+    </entity>
+    <entity name="PhoneNumberVO" representedClassName="PhoneNumberVO" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactVO" inverseName="phoneNumbers" inverseEntity="ContactVO" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ContactVO" positionX="-179.26171875" positionY="122.29296875" width="128" height="103"/>
+        <element name="PhoneNumberVO" positionX="62.078125" positionY="122.03515625" width="128" height="103"/>
+    </elements>
+</model>

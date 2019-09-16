@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactDetailsViewController: UIViewController {
 
@@ -18,6 +19,7 @@ class ContactDetailsViewController: UIViewController {
     var onContactUpdated : ((ContactVO) -> Void)?
     
     var data : ContactVO?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,25 +40,35 @@ class ContactDetailsViewController: UIViewController {
         navigationItem.title = data.username
         
         stackViewPhoneNumbers.removeAllArrangeSubViews()
-        data.phoneNumbers.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.number
-            stackViewPhoneNumbers.addArrangedSubview(label)
+        
+        let fetchRequest : NSFetchRequest<PhoneNumberVO> =  PhoneNumberVO.fetchRequest()
+        let predicate = NSPredicate(format: "contact == %@", data)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "number", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let result = try? DataController.shared.viewContext!.fetch(fetchRequest) {
+            result.forEach { (vo) in
+                let label = WidgetGenerator.getUILabelContactDetails()
+                label.text = vo.number
+                stackViewPhoneNumbers.addArrangedSubview(label)
+            }
         }
         
-        stackViewEmails.removeAllArrangeSubViews()
-        data.emails.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.address
-            stackViewEmails.addArrangedSubview(label)
-        }
         
-        stackViewAddress.removeAllArrangeSubViews()
-        data.addresses.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.fullAddress
-            stackViewAddress.addArrangedSubview(label)
-        }
+//        stackViewEmails.removeAllArrangeSubViews()
+//        data.emails.forEach { (vo) in
+//            let label = WidgetGenerator.getUILabelContactDetails()
+//            label.text = vo.address
+//            stackViewEmails.addArrangedSubview(label)
+//        }
+//
+//        stackViewAddress.removeAllArrangeSubViews()
+//        data.addresses.forEach { (vo) in
+//            let label = WidgetGenerator.getUILabelContactDetails()
+//            label.text = vo.fullAddress
+//            stackViewAddress.addArrangedSubview(label)
+//        }
     }
     
     @objc func onClickEditDetails(_ sender : Any) {
@@ -67,7 +79,7 @@ class ContactDetailsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        if let vc = segue.destination as? AddNewContactViewController {
+        if let vc = segue.destination as? AddEditContactViewController {
             vc.isEditingMode = true
             vc.onViewLoaded = { [weak self] in
                 vc.inflateExistingDataForEditMode(data: self!.data!)

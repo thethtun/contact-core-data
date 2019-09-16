@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactListViewController: UIViewController {
 
@@ -17,6 +18,16 @@ class ContactListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        
+        let fetchRequest : NSFetchRequest<ContactVO> = ContactVO.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        if let context = DataController.shared.viewContext {
+            if let result = try? context.fetch(fetchRequest) {
+                tempContactList = result
+            }
+        }
+        
         tableViewContactList.dataSource = self
         tableViewContactList.delegate = self
         
@@ -25,11 +36,12 @@ class ContactListViewController: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? AddNewContactViewController {
+        if let vc = segue.destination as? AddEditContactViewController {
             
             vc.onNewContactAdded = { [weak self] (data) in
-                tempContactList.append(data)
-                self?.tableViewContactList.reloadData()
+                tempContactList.insert(data, at: 0)
+                self?.tableViewContactList.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                
             }
             
 
@@ -42,6 +54,8 @@ class ContactListViewController: UIViewController {
                 }
             }
         }
+        
+        
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -83,8 +97,12 @@ extension ContactListViewController : UITableViewDelegate {
     }
     
     func deleteContact(at indexPath : IndexPath) {
+        
+        DataController.shared.viewContext!.delete(tempContactList[indexPath.row])
+        try? DataController.shared.viewContext?.save()
+        
         tempContactList.remove(at: indexPath.row)
-        tableViewContactList.reloadData()
+        tableViewContactList.deleteRows(at: [indexPath], with: .automatic)
     }
 }
 

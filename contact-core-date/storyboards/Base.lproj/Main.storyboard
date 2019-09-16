@@ -190,10 +190,10 @@
             </objects>
             <point key="canvasLocation" x="3992.753623188406" y="569.86607142857144"/>
         </scene>
-        <!--Add New Contact View Controller-->
+        <!--Add Edit Contact View Controller-->
         <scene sceneID="Mcw-zl-4h2">
             <objects>
-                <viewController id="4II-g4-NLE" customClass="AddNewContactViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4II-g4-NLE" customClass="AddEditContactViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bN9-5e-rTu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -414,6 +414,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="2b3-qh-JLa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kz1-UB-P0N">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

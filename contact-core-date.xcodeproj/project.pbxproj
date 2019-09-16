@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5171E994232EA4750027D71E /* contact.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5171E992232EA4750027D71E /* contact.xcdatamodeld */; };
+		5171E996232EA9DC0027D71E /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5171E995232EA9DC0027D71E /* DataController.swift */; };
 		518FE6B7232CC6D600030B49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6B6232CC6D600030B49 /* AppDelegate.swift */; };
 		518FE6B9232CC6D600030B49 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6B8232CC6D600030B49 /* ContactListViewController.swift */; };
 		518FE6BC232CC6D600030B49 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518FE6BA232CC6D600030B49 /* Main.storyboard */; };
@@ -16,14 +18,12 @@
 		518FE6D0232CCD7E00030B49 /* AddNewContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6CF232CCD7E00030B49 /* AddNewContactViewController.swift */; };
 		518FE6D3232CD4CE00030B49 /* WidgetGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6D2232CD4CE00030B49 /* WidgetGenerator.swift */; };
 		518FE6D5232CD99200030B49 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6D4232CD99100030B49 /* ContactDetailsViewController.swift */; };
-		518FE6D9232D08DC00030B49 /* ContactVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6D8232D08DC00030B49 /* ContactVO.swift */; };
-		518FE6DB232D093B00030B49 /* PhoneNumberVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6DA232D093B00030B49 /* PhoneNumberVO.swift */; };
-		518FE6DD232D095400030B49 /* AddressVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6DC232D095400030B49 /* AddressVO.swift */; };
-		518FE6DF232D096A00030B49 /* EmailVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6DE232D096A00030B49 /* EmailVO.swift */; };
 		518FE6E1232D0ECF00030B49 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6E0232D0ECF00030B49 /* Repository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5171E993232EA4750027D71E /* contact.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = contact.xcdatamodel; sourceTree = "<group>"; };
+		5171E995232EA9DC0027D71E /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		518FE6B3232CC6D600030B49 /* contact-core-date.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "contact-core-date.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		518FE6B6232CC6D600030B49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		518FE6B8232CC6D600030B49 /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
@@ -35,10 +35,6 @@
 		518FE6CF232CCD7E00030B49 /* AddNewContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewContactViewController.swift; sourceTree = "<group>"; };
 		518FE6D2232CD4CE00030B49 /* WidgetGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetGenerator.swift; sourceTree = "<group>"; };
 		518FE6D4232CD99100030B49 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
-		518FE6D8232D08DC00030B49 /* ContactVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactVO.swift; sourceTree = "<group>"; };
-		518FE6DA232D093B00030B49 /* PhoneNumberVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberVO.swift; sourceTree = "<group>"; };
-		518FE6DC232D095400030B49 /* AddressVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressVO.swift; sourceTree = "<group>"; };
-		518FE6DE232D096A00030B49 /* EmailVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVO.swift; sourceTree = "<group>"; };
 		518FE6E0232D0ECF00030B49 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,8 +126,10 @@
 		518FE6D6232D08C600030B49 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				5171E992232EA4750027D71E /* contact.xcdatamodeld */,
 				518FE6D7232D08CC00030B49 /* vos */,
 				518FE6E0232D0ECF00030B49 /* Repository.swift */,
+				5171E995232EA9DC0027D71E /* DataController.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -139,10 +137,6 @@
 		518FE6D7232D08CC00030B49 /* vos */ = {
 			isa = PBXGroup;
 			children = (
-				518FE6D8232D08DC00030B49 /* ContactVO.swift */,
-				518FE6DA232D093B00030B49 /* PhoneNumberVO.swift */,
-				518FE6DC232D095400030B49 /* AddressVO.swift */,
-				518FE6DE232D096A00030B49 /* EmailVO.swift */,
 			);
 			path = vos;
 			sourceTree = "<group>";
@@ -219,15 +213,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				518FE6B9232CC6D600030B49 /* ContactListViewController.swift in Sources */,
-				518FE6DF232D096A00030B49 /* EmailVO.swift in Sources */,
 				518FE6CE232CC84C00030B49 /* ContactTableViewCell.swift in Sources */,
 				518FE6D5232CD99200030B49 /* ContactDetailsViewController.swift in Sources */,
-				518FE6D9232D08DC00030B49 /* ContactVO.swift in Sources */,
+				5171E994232EA4750027D71E /* contact.xcdatamodeld in Sources */,
 				518FE6E1232D0ECF00030B49 /* Repository.swift in Sources */,
-				518FE6DD232D095400030B49 /* AddressVO.swift in Sources */,
 				518FE6D0232CCD7E00030B49 /* AddNewContactViewController.swift in Sources */,
 				518FE6D3232CD4CE00030B49 /* WidgetGenerator.swift in Sources */,
-				518FE6DB232D093B00030B49 /* PhoneNumberVO.swift in Sources */,
+				5171E996232EA9DC0027D71E /* DataController.swift in Sources */,
 				518FE6B7232CC6D600030B49 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +418,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5171E992232EA4750027D71E /* contact.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5171E993232EA4750027D71E /* contact.xcdatamodel */,
+			);
+			currentVersion = 5171E993232EA4750027D71E /* contact.xcdatamodel */;
+			path = contact.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 518FE6AB232CC6D600030B49 /* Project object */;
 }

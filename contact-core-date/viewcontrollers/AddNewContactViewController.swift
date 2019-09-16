@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class AddNewContactViewController: UIViewController {
+class AddEditContactViewController: UIViewController {
 
     @IBOutlet weak var textFieldUserName : UITextField!
     @IBOutlet weak var stackViewAddPhone : UIStackView!
@@ -16,11 +17,16 @@ class AddNewContactViewController: UIViewController {
     @IBOutlet weak var stackViewAddAddress : UIStackView!
     @IBOutlet weak var navigationBar : UINavigationBar!
     
+    private var editingContact : ContactVO?
+    private var existingPhoneNumbers : [PhoneNumberVO]?
+
+    
     var onNewContactAdded : ((ContactVO) -> Void)?
     var onContactUpdated : ((ContactVO) -> Void)?
     var onViewLoaded : (() -> Void)?
     
     var isEditingMode : Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +66,31 @@ class AddNewContactViewController: UIViewController {
             return
         }
         
-        let phoneNumberVOs = stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
+        //Delete existing phone numbers
+        if let phonenumbers = existingPhoneNumbers, !phonenumbers.isEmpty {
+            phonenumbers.forEach { (phoneNumberVO) in
+                DataController.shared.viewContext!.delete(phoneNumberVO)
+            }
+        }
+        
+        //Update existing contact
+        var contactRef : ContactVO?
+        if let contact = editingContact {
+            contactRef = contact
+            contact.username = username
+            contact.updatedAt = Date()
+        } else {
+            let contactVO = ContactVO(context: DataController.shared.viewContext!)
+            contactVO.username = username
+            contactVO.createdAt = Date()
+            contactVO.updatedAt = Date()
+            contactRef = contactVO
+        }
+        
+        try? DataController.shared.viewContext?.save()
+        
+        
+        stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
                 if view is UITextField {
                     return view as? UITextField
                 }
@@ -72,54 +102,58 @@ class AddNewContactViewController: UIViewController {
                 }
                 return nil
             }.compactMap { $0 }
-            .map { (value) -> PhoneNumberVO in
-                let vo = PhoneNumberVO(number: value)
-                return vo
+            .forEach { (value)  in
+                let vo = PhoneNumberVO(context: DataController.shared.viewContext!)
+                vo.number = value
+                vo.createdAt = Date()
+                vo.updatedAt = Date()
+                vo.contact = contactRef
+                
+                try? DataController.shared.viewContext?.save()
             }
         
-        let emailVOs = stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
-            if view is UITextField {
-                return view as? UITextField
-            }
-            return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .map { (value) -> EmailVO in
-                let vo = EmailVO(address: value)
-                return vo
-        }
         
         
-        let addressVOs = stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
-            if view is UITextField {
-                return view as? UITextField
-            }
-            return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .map { (value) -> AddressVO in
-                let vo = AddressVO(fullAddress: value)
-                return vo
-        }
+//        let emailVOs = stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
+//            if view is UITextField {
+//                return view as? UITextField
+//            }
+//            return nil
+//            }.compactMap { $0 }
+//            .map { (textField) -> String? in
+//                if textField.text != nil && !textField.text!.isEmpty {
+//                    return textField.text!
+//                }
+//                return nil
+//            }.compactMap { $0 }
+//            .map { (value) -> EmailVO in
+//                let vo = EmailVO(address: value)
+//                return vo
+//        }
         
         
-        let contactVO = ContactVO(username: username, phoneNumbers: phoneNumberVOs, emails: emailVOs, addresses: addressVOs)
+//        let addressVOs = stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
+//            if view is UITextField {
+//                return view as? UITextField
+//            }
+//            return nil
+//            }.compactMap { $0 }
+//            .map { (textField) -> String? in
+//                if textField.text != nil && !textField.text!.isEmpty {
+//                    return textField.text!
+//                }
+//                return nil
+//            }.compactMap { $0 }
+//            .map { (value) -> AddressVO in
+//                let vo = AddressVO(fullAddress: value)
+//                return vo
+//        }
         
         
         if isEditingMode {
-            self.onContactUpdated!(contactVO)
+            self.onContactUpdated!(contactRef!)
         } else {
-            self.onNewContactAdded!(contactVO)
+            self.onNewContactAdded!(contactRef!)
         }
         
         self.dismiss(animated: true, completion: nil)
@@ -130,25 +164,36 @@ class AddNewContactViewController: UIViewController {
     }
     
     func inflateExistingDataForEditMode(data : ContactVO) {
+        self.editingContact = data
         textFieldUserName.text = data.username
         
-        data.phoneNumbers.forEach { (data) in
-            let textField = WidgetGenerator.getUITextField(contentType: .creditCardNumber)
-            textField.text = data.number
-            stackViewAddPhone.insertArrangedSubview(textField, at: 0)
+        let fetchRequest : NSFetchRequest<PhoneNumberVO> =  PhoneNumberVO.fetchRequest()
+        let predicate = NSPredicate(format: "contact == %@", data)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "number", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let result = try? DataController.shared.viewContext!.fetch(fetchRequest) {
+            existingPhoneNumbers = result
+            result.forEach { (data) in
+                let textField = WidgetGenerator.getUITextField(contentType: .creditCardNumber)
+                textField.text = data.number
+                stackViewAddPhone.insertArrangedSubview(textField, at: 0)
+            }
         }
         
-        data.emails.forEach { (data) in
-            let textField = WidgetGenerator.getUITextField(contentType: .emailAddress)
-            textField.text = data.address
-            stackViewAddEmail.insertArrangedSubview(textField, at: 0)
-        }
-        
-        data.addresses.forEach { (data) in
-            let textField = WidgetGenerator.getUITextField(contentType: .fullStreetAddress)
-            textField.text = data.fullAddress
-            stackViewAddAddress.insertArrangedSubview(textField, at: 0)
-        }
+
+//        data.emails.forEach { (data) in
+//            let textField = WidgetGenerator.getUITextField(contentType: .emailAddress)
+//            textField.text = data.address
+//            stackViewAddEmail.insertArrangedSubview(textField, at: 0)
+//        }
+//
+//        data.addresses.forEach { (data) in
+//            let textField = WidgetGenerator.getUITextField(contentType: .fullStreetAddress)
+//            textField.text = data.fullAddress
+//            stackViewAddAddress.insertArrangedSubview(textField, at: 0)
+//        }
     }
     
     func showError(message : String?) {
