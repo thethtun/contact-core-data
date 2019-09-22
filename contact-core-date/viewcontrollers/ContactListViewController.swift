@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import CoreData
+
 
 class ContactListViewController: UIViewController {
-
-    @IBOutlet weak var tableViewContactList : UITableView!
     
+    @IBOutlet weak var tableViewContactList : UITableView!
+
+    let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,106 @@ class ContactListViewController: UIViewController {
         tableViewContactList.delegate = self
         
         navigationItem.leftBarButtonItem = editButtonItem
+        
+//        testCoreData()
+    }
+   
+    
+    
+    fileprivate func testCoreData() {
+        
+//        insertRefrigerator()
+        
+//        if let result = getRefrigeratorByName(name : "Nintendo") {
+//            print(result.name ?? 0)
+//
+//            if let fruits = fetchFruitsByRefrigerator(refrigerator: result) {
+//                fruits.forEach{ fruit in
+//                    print(fruit.name ?? "")
+//                }
+//            }
+//        }
+    }
+    
+    fileprivate func fetchFruitsByRefrigerator(refrigerator : Refrigerator) -> [Fruit]? {
+        let fetchRequest : NSFetchRequest<Fruit> = Fruit.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "refrigerator == %@", refrigerator)
+        
+        if let fruits = try? persistentContainer.viewContext.fetch(fetchRequest) {
+            return fruits
+        }
+        
+        return nil
+    }
+    
+    
+    fileprivate func insertRefrigerator() {
+        //        /*
+        //         INSERT name INTO Refrigerator VALUES ("Samsung");
+        //         */
+        
+        let c = Refrigerator(context: persistentContainer.viewContext)
+        c.name = "Nintendo"
+        let fruit = Fruit(context: persistentContainer.viewContext)
+        fruit.name = ""
+        c.addToFruits(fruit)
+        c.addToFruits(Fruit(context: persistentContainer.viewContext))
+        
+        //        let fruit = Fruit(context: persistentContainer.viewContext)
+        //        fruit.name = "apple"
+        //        fruit.color = "red"
+        
+        do {
+            try persistentContainer.viewContext.save()
+        } catch {
+            print("Failed to save data \(error.localizedDescription)")
+        }
+    }
+    
+    
+    fileprivate func getRefrigeratorByName(name : String) -> Refrigerator? {
+        /*
+         SELECT * FROM Refrigerator WHERE name = "Samsung";
+         */
+        let fetchRequest : NSFetchRequest<Refrigerator> = Refrigerator.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = predicate
+        
+        do {
+            let results = try persistentContainer.viewContext.fetch(fetchRequest)
+            return results[0]
+        } catch {
+            print("Failed to fetch data \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    fileprivate func getAllRefigerator () {
+        /*
+         SELECT *  FROM Refrigerator ORDER BY name ASC;
+         */
+        let fetchRequest : NSFetchRequest<Refrigerator> = Refrigerator.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        do {
+            let results = try persistentContainer.viewContext.fetch(fetchRequest)
+            print("=====================")
+            results.forEach{ result in
+                print(result.name ?? "Empty name")
+                
+                try? persistentContainer.viewContext.delete(result)
+                
+            }
+            print("=====================")
+            
+            
+        } catch {
+            print("Failed to fetch data \(error.localizedDescription)")
+        }
     }
     
     

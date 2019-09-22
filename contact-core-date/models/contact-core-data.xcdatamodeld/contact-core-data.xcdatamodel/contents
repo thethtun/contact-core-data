@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="19A536g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AddressVO" representedClassName="AddressVO" syncable="YES" codeGenerationType="class">
+        <attribute name="fullAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactVO" inverseName="addresses" inverseEntity="ContactVO" syncable="YES"/>
+    </entity>
+    <entity name="ContactVO" representedClassName="ContactVO" syncable="YES" codeGenerationType="class">
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AddressVO" inverseName="contact" inverseEntity="AddressVO" syncable="YES"/>
+        <relationship name="emails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EmailVO" inverseName="contact" inverseEntity="EmailVO" syncable="YES"/>
+        <relationship name="phone_numbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumberVO" inverseName="contact" inverseEntity="PhoneNumberVO" syncable="YES"/>
+    </entity>
+    <entity name="EmailVO" representedClassName="EmailVO" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactVO" inverseName="emails" inverseEntity="ContactVO" syncable="YES"/>
+    </entity>
+    <entity name="Fruit" representedClassName="Fruit" syncable="YES" codeGenerationType="class">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="refrigerator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Refrigerator" inverseName="fruits" inverseEntity="Refrigerator" syncable="YES"/>
+    </entity>
+    <entity name="PhoneNumberVO" representedClassName="PhoneNumberVO" syncable="YES" codeGenerationType="class">
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactVO" inverseName="phone_numbers" inverseEntity="ContactVO" syncable="YES"/>
+    </entity>
+    <entity name="Refrigerator" representedClassName="Refrigerator" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fruits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Fruit" inverseName="refrigerator" inverseEntity="Fruit" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Fruit" positionX="-1592.26953125" positionY="-791.51953125" width="128" height="88"/>
+        <element name="Refrigerator" positionX="-1874.4453125" positionY="-799.55078125" width="128" height="73"/>
+        <element name="ContactVO" positionX="-1897.7578125" positionY="-638.01171875" width="128" height="103"/>
+        <element name="PhoneNumberVO" positionX="-1660.16796875" positionY="-530.42578125" width="128" height="73"/>
+        <element name="AddressVO" positionX="-1901.36328125" positionY="-461.00390625" width="128" height="73"/>
+        <element name="EmailVO" positionX="-1666.28125" positionY="-666.91796875" width="128" height="73"/>
+    </elements>
+</model>

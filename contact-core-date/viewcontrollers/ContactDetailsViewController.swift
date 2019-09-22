@@ -21,6 +21,8 @@ class ContactDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(onClickEditDetails) )
         // Do any additional setup after loading the view.
@@ -38,25 +40,25 @@ class ContactDetailsViewController: UIViewController {
         navigationItem.title = data.username
         
         stackViewPhoneNumbers.removeAllArrangeSubViews()
-        data.phoneNumbers.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.number
-            stackViewPhoneNumbers.addArrangedSubview(label)
-        }
-        
-        stackViewEmails.removeAllArrangeSubViews()
-        data.emails.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.address
-            stackViewEmails.addArrangedSubview(label)
-        }
-        
-        stackViewAddress.removeAllArrangeSubViews()
-        data.addresses.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.fullAddress
-            stackViewAddress.addArrangedSubview(label)
-        }
+//        data.phoneNumbers.forEach { (vo) in
+//            let label = WidgetGenerator.getUILabelContactDetails()
+//            label.text = vo.number
+//            stackViewPhoneNumbers.addArrangedSubview(label)
+//        }
+//        
+//        stackViewEmails.removeAllArrangeSubViews()
+//        data.emails.forEach { (vo) in
+//            let label = WidgetGenerator.getUILabelContactDetails()
+//            label.text = vo.address
+//            stackViewEmails.addArrangedSubview(label)
+//        }
+//        
+//        stackViewAddress.removeAllArrangeSubViews()
+//        data.addresses.forEach { (vo) in
+//            let label = WidgetGenerator.getUILabelContactDetails()
+//            label.text = vo.fullAddress
+//            stackViewAddress.addArrangedSubview(label)
+//        }
     }
     
     @objc func onClickEditDetails(_ sender : Any) {

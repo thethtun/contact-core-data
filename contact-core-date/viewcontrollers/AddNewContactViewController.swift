@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AddNewContactViewController: UIViewController {
 
@@ -15,6 +16,8 @@ class AddNewContactViewController: UIViewController {
     @IBOutlet weak var stackViewAddEmail : UIStackView!
     @IBOutlet weak var stackViewAddAddress : UIStackView!
     @IBOutlet weak var navigationBar : UINavigationBar!
+    
+    let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     
     var onNewContactAdded : ((ContactVO) -> Void)?
     var onContactUpdated : ((ContactVO) -> Void)?
@@ -60,7 +63,11 @@ class AddNewContactViewController: UIViewController {
             return
         }
         
-        let phoneNumberVOs = stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
+        let contactVO = ContactVO(context: persistentContainer.viewContext)
+        contactVO.username = username
+        
+        
+        stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
                 if view is UITextField {
                     return view as? UITextField
                 }
@@ -72,12 +79,13 @@ class AddNewContactViewController: UIViewController {
                 }
                 return nil
             }.compactMap { $0 }
-            .map { (value) -> PhoneNumberVO in
-                let vo = PhoneNumberVO(number: value)
-                return vo
+            .forEach { (value) in
+                let data = PhoneNumberVO(context: persistentContainer.viewContext)
+                data.number = value
+                data.contact = contactVO
             }
-        
-        let emailVOs = stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
+
+        stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
             if view is UITextField {
                 return view as? UITextField
             }
@@ -89,13 +97,13 @@ class AddNewContactViewController: UIViewController {
                 }
                 return nil
             }.compactMap { $0 }
-            .map { (value) -> EmailVO in
-                let vo = EmailVO(address: value)
-                return vo
+            .forEach { (value) in
+                let data = EmailVO(context: persistentContainer.viewContext)
+                data.address = value
+                data.contact = contactVO
         }
-        
-        
-        let addressVOs = stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
+
+        stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
             if view is UITextField {
                 return view as? UITextField
             }
@@ -107,14 +115,17 @@ class AddNewContactViewController: UIViewController {
                 }
                 return nil
             }.compactMap { $0 }
-            .map { (value) -> AddressVO in
-                let vo = AddressVO(fullAddress: value)
-                return vo
+            .forEach { (value) in
+                let data = AddressVO(context: persistentContainer.viewContext)
+                data.fullAddress = value
+                data.contact = contactVO
         }
         
-        
-        let contactVO = ContactVO(username: username, phoneNumbers: phoneNumberVOs, emails: emailVOs, addresses: addressVOs)
-        
+        do {
+            try persistentContainer.viewContext.save()
+        } catch {
+            Dialog.showAlert(viewController: self, title: "Error", message: "Failed to save contact \(error.localizedDescription)")
+        }
         
         if isEditingMode {
             self.onContactUpdated!(contactVO)
@@ -124,6 +135,7 @@ class AddNewContactViewController: UIViewController {
         
         self.dismiss(animated: true, completion: nil)
     }
+
     
     func showEditingMode() {
         navigationBar.topItem?.title = "Edit Contact"
@@ -132,23 +144,23 @@ class AddNewContactViewController: UIViewController {
     func inflateExistingDataForEditMode(data : ContactVO) {
         textFieldUserName.text = data.username
         
-        data.phoneNumbers.forEach { (data) in
-            let textField = WidgetGenerator.getUITextField(contentType: .creditCardNumber)
-            textField.text = data.number
-            stackViewAddPhone.insertArrangedSubview(textField, at: 0)
-        }
-        
-        data.emails.forEach { (data) in
-            let textField = WidgetGenerator.getUITextField(contentType: .emailAddress)
-            textField.text = data.address
-            stackViewAddEmail.insertArrangedSubview(textField, at: 0)
-        }
-        
-        data.addresses.forEach { (data) in
-            let textField = WidgetGenerator.getUITextField(contentType: .fullStreetAddress)
-            textField.text = data.fullAddress
-            stackViewAddAddress.insertArrangedSubview(textField, at: 0)
-        }
+//        data.phoneNumbers.forEach { (data) in
+//            let textField = WidgetGenerator.getUITextField(contentType: .creditCardNumber)
+//            textField.text = data.number
+//            stackViewAddPhone.insertArrangedSubview(textField, at: 0)
+//        }
+//
+//        data.emails.forEach { (data) in
+//            let textField = WidgetGenerator.getUITextField(contentType: .emailAddress)
+//            textField.text = data.address
+//            stackViewAddEmail.insertArrangedSubview(textField, at: 0)
+//        }
+//
+//        data.addresses.forEach { (data) in
+//            let textField = WidgetGenerator.getUITextField(contentType: .fullStreetAddress)
+//            textField.text = data.fullAddress
+//            stackViewAddAddress.insertArrangedSubview(textField, at: 0)
+//        }
     }
     
     func showError(message : String?) {
