@@ -7,142 +7,94 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 
 class ContactListViewController: UIViewController {
     
     @IBOutlet weak var tableViewContactList : UITableView!
 
-    let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    ///Migration
+    let realm = try! Realm(configuration: Realm.Configuration(
+        schemaVersion: 10,
+        migrationBlock: { migration, oldSchemaVersion in
+            if (oldSchemaVersion < 10) {
+                migration.enumerateObjects(ofType: ContactVO.className(), { oldObject, newObject in
+                })
+            }
+            
+    }))
+    
+    var contactList : Results<ContactVO>?
+    var contactListToken : NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        initView()
         
+        loadData()
+    }
+    
+    private func initView() {
         tableViewContactList.dataSource = self
         tableViewContactList.delegate = self
         
         navigationItem.leftBarButtonItem = editButtonItem
-        
-//        testCoreData()
-    }
-   
-    
-    
-    fileprivate func testCoreData() {
-        
-//        insertRefrigerator()
-        
-//        if let result = getRefrigeratorByName(name : "Nintendo") {
-//            print(result.name ?? 0)
-//
-//            if let fruits = fetchFruitsByRefrigerator(refrigerator: result) {
-//                fruits.forEach{ fruit in
-//                    print(fruit.name ?? "")
-//                }
-//            }
-//        }
     }
     
-    fileprivate func fetchFruitsByRefrigerator(refrigerator : Refrigerator) -> [Fruit]? {
-        let fetchRequest : NSFetchRequest<Fruit> = Fruit.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "refrigerator == %@", refrigerator)
+    private func loadData() {
+        contactList = realm.objects(ContactVO.self).sorted(byKeyPath: "createdAt", ascending: true)
         
-        if let fruits = try? persistentContainer.viewContext.fetch(fetchRequest) {
-            return fruits
-        }
-        
-        return nil
-    }
-    
-    
-    fileprivate func insertRefrigerator() {
-        //        /*
-        //         INSERT name INTO Refrigerator VALUES ("Samsung");
-        //         */
-        
-        let c = Refrigerator(context: persistentContainer.viewContext)
-        c.name = "Nintendo"
-        let fruit = Fruit(context: persistentContainer.viewContext)
-        fruit.name = ""
-        c.addToFruits(fruit)
-        c.addToFruits(Fruit(context: persistentContainer.viewContext))
-        
-        //        let fruit = Fruit(context: persistentContainer.viewContext)
-        //        fruit.name = "apple"
-        //        fruit.color = "red"
-        
-        do {
-            try persistentContainer.viewContext.save()
-        } catch {
-            print("Failed to save data \(error.localizedDescription)")
-        }
-    }
-    
-    
-    fileprivate func getRefrigeratorByName(name : String) -> Refrigerator? {
-        /*
-         SELECT * FROM Refrigerator WHERE name = "Samsung";
-         */
-        let fetchRequest : NSFetchRequest<Refrigerator> = Refrigerator.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        let predicate = NSPredicate(format: "name == %@", name)
-        fetchRequest.predicate = predicate
-        
-        do {
-            let results = try persistentContainer.viewContext.fetch(fetchRequest)
-            return results[0]
-        } catch {
-            print("Failed to fetch data \(error.localizedDescription)")
-            return nil
-        }
-    }
-    
-    fileprivate func getAllRefigerator () {
-        /*
-         SELECT *  FROM Refrigerator ORDER BY name ASC;
-         */
-        let fetchRequest : NSFetchRequest<Refrigerator> = Refrigerator.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        do {
-            let results = try persistentContainer.viewContext.fetch(fetchRequest)
-            print("=====================")
-            results.forEach{ result in
-                print(result.name ?? "Empty name")
-                
-                try? persistentContainer.viewContext.delete(result)
-                
+        //Observing Collection data changes
+        contactListToken = contactList?.observe{ [weak self] (changes : RealmCollectionChange) in
+            switch changes {
+            case .initial:
+                // Results are now populated and can be accessed without blocking the UI
+                self?.tableViewContactList.reloadData()
+                break
+            case .update(_, let deletions, let insertions, let modifications):
+                //Query results have changed, so apply them to the UITableView
+                self?.tableViewContactList.beginUpdates()
+                // Always apply updates in the following order: deletions, insertions, then modifications.
+                // Handling insertions before deletions may result in unexpected behavior.
+                self?.tableViewContactList.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
+                                                      with: .automatic)
+                self?.tableViewContactList.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
+                                                      with: .automatic)
+                self?.tableViewContactList.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
+                                                      with: .automatic)
+                self?.tableViewContactList.endUpdates()
+                break
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break;
             }
-            print("=====================")
-            
-            
-        } catch {
-            print("Failed to fetch data \(error.localizedDescription)")
         }
     }
     
+    deinit {
+        contactListToken?.invalidate()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? AddNewContactViewController {
+        if let _ = segue.destination as? AddNewContactViewController {
             
-            vc.onNewContactAdded = { [weak self] (data) in
-                tempContactList.append(data)
-                self?.tableViewContactList.reloadData()
-            }
+//            vc.onNewContactAdded = { [weak self] (data) in
+//                self?.contactList?.append(data)
+//                self?.tableViewContactList.reloadData()
+//            }
             
 
         } else if let vc = segue.destination as? ContactDetailsViewController {
             if let indexPath = tableViewContactList.indexPathForSelectedRow {
                 vc.selectedIndexPath = indexPath
-                vc.data = tempContactList[indexPath.row]
-                vc.onContactUpdated = { [weak self] (data) in
-                    tempContactList[indexPath.row] = data
-                }
+                vc.data = self.contactList![indexPath.row]
+//                vc.onContactUpdated = { [weak self] (data) in
+//                    self?.contactList![indexPath.row] = data
+//                    self?.tableViewContactList.reloadData()
+//                }
             }
         }
     }
@@ -161,7 +113,7 @@ extension ContactListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tempContactList.count;
+        return contactList?.count ?? 0;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -169,7 +121,8 @@ extension ContactListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        cell.data = tempContactList[indexPath.row]
+        
+        cell.data = contactList?[indexPath.row]
         
         return cell
     }
@@ -186,8 +139,12 @@ extension ContactListViewController : UITableViewDelegate {
     }
     
     func deleteContact(at indexPath : IndexPath) {
-        tempContactList.remove(at: indexPath.row)
-        tableViewContactList.reloadData()
+        ///Delete Object Using Realm Delete
+        try! realm.write {
+            realm.delete(self.contactList![indexPath.row])
+        }
+        
+        tableViewContactList.deleteRows(at: [indexPath], with: .automatic)
     }
 }
 

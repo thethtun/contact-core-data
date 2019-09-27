@@ -7,27 +7,23 @@
 //
 
 import UIKit
-import CoreData
+import Realm
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    lazy var persistentContainer : NSPersistentContainer = {
-        let persistentContainer = NSPersistentContainer(name: "contact-core-data")
-        persistentContainer.loadPersistentStores { storeDescription, error in
-            //handle error
-            if let error = error {
-                fatalError("failed to load container \(error.localizedDescription)")
-            }
-        }
-        return  persistentContainer
-    }()
+ 
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        print("Realm File -> \(Realm.Configuration.defaultConfiguration.fileURL?.absoluteString ?? "no url :(") ")
+        
+        
+    
+        
         return true
     }
 
@@ -51,8 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        
-        try? persistentContainer.viewContext.save()
     }
 
     

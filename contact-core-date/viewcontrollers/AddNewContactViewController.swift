@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class AddNewContactViewController: UIViewController {
 
@@ -17,13 +17,15 @@ class AddNewContactViewController: UIViewController {
     @IBOutlet weak var stackViewAddAddress : UIStackView!
     @IBOutlet weak var navigationBar : UINavigationBar!
     
-    let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    var editingContactId : String = ""
     
     var onNewContactAdded : ((ContactVO) -> Void)?
     var onContactUpdated : ((ContactVO) -> Void)?
     var onViewLoaded : (() -> Void)?
     
     var isEditingMode : Bool = false
+    
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,76 +64,58 @@ class AddNewContactViewController: UIViewController {
             showError(message: "Empty username")
             return
         }
-        
-        let contactVO = ContactVO(context: persistentContainer.viewContext)
-        contactVO.username = username
-        
-        
-        stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
-                if view is UITextField {
-                    return view as? UITextField
-                }
-                return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .forEach { (value) in
-                let data = PhoneNumberVO(context: persistentContainer.viewContext)
-                data.number = value
-                data.contact = contactVO
-            }
 
-        stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
-            if view is UITextField {
-                return view as? UITextField
+        var contactRef : ContactVO?
+        if !editingContactId.isEmpty {
+            let contacts = realm.objects(ContactVO.self).filter(NSPredicate(format: "id == %@", editingContactId))
+            if contacts.isEmpty {
+                Dialog.showAlert(viewController: self, title: "Error", message: "Can't update data. Try inserting new contact.")
+                return
+            } else {
+                contactRef = contacts.first
             }
-            return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .forEach { (value) in
-                let data = EmailVO(context: persistentContainer.viewContext)
-                data.address = value
-                data.contact = contactVO
+        } else {
+            contactRef = ContactVO()
         }
-
-        stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
-            if view is UITextField {
-                return view as? UITextField
-            }
-            return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .forEach { (value) in
-                let data = AddressVO(context: persistentContainer.viewContext)
-                data.fullAddress = value
-                data.contact = contactVO
+        
+        guard let safeContactRef = contactRef else {
+            Dialog.showAlert(viewController: self, title: "Error", message: "Oops. Something went wrong. Try clear the app or clean install app.")
+            return
         }
+        
+        
+        let phoneNumberList = getAddedPhoneNumbers()
+        let emailList = getAddedEmails()
+        let addressList = getAddedAddresses()
         
         do {
-            try persistentContainer.viewContext.save()
+            try realm.write() {
+                
+                safeContactRef.username = username
+                
+                safeContactRef.phoneNumbers.removeAll()
+                phoneNumberList.forEach{ safeContactRef.phoneNumbers.append($0)}
+                
+                safeContactRef.emails.removeAll()
+                emailList.forEach{ safeContactRef.emails.append($0)}
+                
+                safeContactRef.addresses.removeAll()
+                addressList.forEach{ safeContactRef.addresses.append($0)}
+
+                realm.add(safeContactRef, update: .modified)
+
+            }
         } catch {
             Dialog.showAlert(viewController: self, title: "Error", message: "Failed to save contact \(error.localizedDescription)")
         }
         
         if isEditingMode {
-            self.onContactUpdated!(contactVO)
+            self.onContactUpdated!(safeContactRef)
         } else {
-            self.onNewContactAdded!(contactVO)
+            self.onNewContactAdded!(safeContactRef)
         }
+        
+        
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -144,24 +128,85 @@ class AddNewContactViewController: UIViewController {
     func inflateExistingDataForEditMode(data : ContactVO) {
         textFieldUserName.text = data.username
         
-//        data.phoneNumbers.forEach { (data) in
-//            let textField = WidgetGenerator.getUITextField(contentType: .creditCardNumber)
-//            textField.text = data.number
-//            stackViewAddPhone.insertArrangedSubview(textField, at: 0)
-//        }
-//
-//        data.emails.forEach { (data) in
-//            let textField = WidgetGenerator.getUITextField(contentType: .emailAddress)
-//            textField.text = data.address
-//            stackViewAddEmail.insertArrangedSubview(textField, at: 0)
-//        }
-//
-//        data.addresses.forEach { (data) in
-//            let textField = WidgetGenerator.getUITextField(contentType: .fullStreetAddress)
-//            textField.text = data.fullAddress
-//            stackViewAddAddress.insertArrangedSubview(textField, at: 0)
-//        }
+        data.phoneNumbers.forEach { (data) in
+            let textField = WidgetGenerator.getUITextField(contentType: .creditCardNumber)
+            textField.text = data.number
+            stackViewAddPhone.insertArrangedSubview(textField, at: 0)
+        }
+
+        data.emails.forEach { (data) in
+            let textField = WidgetGenerator.getUITextField(contentType: .emailAddress)
+            textField.text = data.address
+            stackViewAddEmail.insertArrangedSubview(textField, at: 0)
+        }
+
+        data.addresses.forEach { (data) in
+            let textField = WidgetGenerator.getUITextField(contentType: .fullStreetAddress)
+            textField.text = data.fullAddress
+            stackViewAddAddress.insertArrangedSubview(textField, at: 0)
+        }
     }
+    
+    func getAddedPhoneNumbers() -> [PhoneNumberVO] {
+        return stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
+            if view is UITextField {
+                return view as? UITextField
+            }
+            return nil
+            }.compactMap { $0 }
+            .map { (textField) -> String? in
+                if textField.text != nil && !textField.text!.isEmpty {
+                    return textField.text!
+                }
+                return nil
+            }.compactMap { $0 }
+            .map { (value) -> PhoneNumberVO in
+                let data = PhoneNumberVO()
+                data.number = value
+                return data
+        }
+    }
+    
+    func getAddedEmails() -> [EmailVO] {
+        return stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
+            if view is UITextField {
+                return view as? UITextField
+            }
+            return nil
+            }.compactMap { $0 }
+            .map { (textField) -> String? in
+                if textField.text != nil && !textField.text!.isEmpty {
+                    return textField.text!
+                }
+                return nil
+            }.compactMap { $0 }
+            .map { (value) -> EmailVO in
+                let data = EmailVO()
+                data.address = value
+                return data
+        }
+    }
+    
+    func getAddedAddresses() -> [AddressVO] {
+        return stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
+            if view is UITextField {
+                return view as? UITextField
+            }
+            return nil
+            }.compactMap { $0 }
+            .map { (textField) -> String? in
+                if textField.text != nil && !textField.text!.isEmpty {
+                    return textField.text!
+                }
+                return nil
+            }.compactMap { $0 }
+            .map { (value) -> AddressVO in
+                let data = AddressVO()
+                data.fullAddress = value
+                return data
+        }
+    }
+    
     
     func showError(message : String?) {
         let controller = UIAlertController.init(title: "error", message: message, preferredStyle: .alert)

@@ -1,5 +1,5 @@
 //
-//  Repository.swift
+//  AddressVO.swift
 //  contact-core-date
 //
 //  Created by Thet Htun on 9/14/19.
@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
 
-
-var tempContactList : [ContactVO] = []
+class AddressVO : Object {
+    @objc dynamic var fullAddress: String = ""
+}
