@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AddNewContactViewController: UIViewController {
 
@@ -20,7 +21,10 @@ class AddNewContactViewController: UIViewController {
     var onContactUpdated : ((ContactVO) -> Void)?
     var onViewLoaded : (() -> Void)?
     
+    
     var isEditingMode : Bool = false
+    
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,67 +64,79 @@ class AddNewContactViewController: UIViewController {
             return
         }
         
-        let phoneNumberVOs = stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
-                if view is UITextField {
-                    return view as? UITextField
-                }
-                return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .map { (value) -> PhoneNumberVO in
-                let vo = PhoneNumberVO(number: value)
-                return vo
-            }
+//        let phoneNumberVOs = stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
+//                if view is UITextField {
+//                    return view as? UITextField
+//                }
+//                return nil
+//            }.compactMap { $0 }
+//            .map { (textField) -> String? in
+//                if textField.text != nil && !textField.text!.isEmpty {
+//                    return textField.text!
+//                }
+//                return nil
+//            }.compactMap { $0 }
+//            .map { (value) -> PhoneNumberVO in
+//                let vo = PhoneNumberVO(number: value)
+//                return vo
+//            }
+//
+//        let emailVOs = stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
+//            if view is UITextField {
+//                return view as? UITextField
+//            }
+//            return nil
+//            }.compactMap { $0 }
+//            .map { (textField) -> String? in
+//                if textField.text != nil && !textField.text!.isEmpty {
+//                    return textField.text!
+//                }
+//                return nil
+//            }.compactMap { $0 }
+//            .map { (value) -> EmailVO in
+//                let vo = EmailVO(address: value)
+//                return vo
+//        }
+//
+//
+//        let addressVOs = stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
+//            if view is UITextField {
+//                return view as? UITextField
+//            }
+//            return nil
+//            }.compactMap { $0 }
+//            .map { (textField) -> String? in
+//                if textField.text != nil && !textField.text!.isEmpty {
+//                    return textField.text!
+//                }
+//                return nil
+//            }.compactMap { $0 }
+//            .map { (value) -> AddressVO in
+//                let vo = AddressVO(fullAddress: value)
+//                return vo
+//        }
+//
+//
+//        let contactVO = ContactVO(username: username, phoneNumbers: phoneNumberVOs, emails: emailVOs, addresses: addressVOs)
+//
+//
+//        if isEditingMode {
+//            self.onContactUpdated!(contactVO)
+//        } else {
+//            self.onNewContactAdded!(contactVO)
+//        }
         
-        let emailVOs = stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
-            if view is UITextField {
-                return view as? UITextField
+        let contactVO = ContactVO()
+        contactVO.username = username
+        
+        do {
+            try realm.write {
+                realm.add(contactVO)
             }
-            return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .map { (value) -> EmailVO in
-                let vo = EmailVO(address: value)
-                return vo
+        } catch {
+            print("\(error.localizedDescription)")
         }
         
-        
-        let addressVOs = stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
-            if view is UITextField {
-                return view as? UITextField
-            }
-            return nil
-            }.compactMap { $0 }
-            .map { (textField) -> String? in
-                if textField.text != nil && !textField.text!.isEmpty {
-                    return textField.text!
-                }
-                return nil
-            }.compactMap { $0 }
-            .map { (value) -> AddressVO in
-                let vo = AddressVO(fullAddress: value)
-                return vo
-        }
-        
-        
-        let contactVO = ContactVO(username: username, phoneNumbers: phoneNumberVOs, emails: emailVOs, addresses: addressVOs)
-        
-        
-        if isEditingMode {
-            self.onContactUpdated!(contactVO)
-        } else {
-            self.onNewContactAdded!(contactVO)
-        }
         
         self.dismiss(animated: true, completion: nil)
     }

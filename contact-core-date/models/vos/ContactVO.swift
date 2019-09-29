@@ -7,24 +7,15 @@
 //
 
 import Foundation
+import RealmSwift
 
-
-struct ContactVO {
-    var username : String = ""
-    var phoneNumbers = [PhoneNumberVO]()
-    var emails = [EmailVO]()
-    var addresses = [AddressVO]()
-    let createdAt : Date = Date()
-    let updatedAt : Date = Date()
+class ContactVO : Object {
+    @objc dynamic var username : String = ""
+    let phoneNumbers = List<PhoneNumberVO>()
+    let emails = List<EmailVO>()
+    let addresses = List<AddressVO>()
+    @objc dynamic var createdAt : Date = Date()
+    @objc dynamic var updatedAt : Date = Date()
     
-    init() {
-        
-    }
     
-    init(username : String, phoneNumbers : [PhoneNumberVO], emails : [EmailVO], addresses : [AddressVO]) {
-        self.username = username
-        self.phoneNumbers = phoneNumbers
-        self.emails = emails
-        self.addresses = addresses
-    }
 }

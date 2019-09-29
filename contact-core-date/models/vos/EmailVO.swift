@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct EmailVO {
-    let address : String
+class EmailVO : Object {
+    @objc dynamic var address : String?
 }

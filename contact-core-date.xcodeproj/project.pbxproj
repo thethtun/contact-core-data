@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4721ADBAA740CAA81D45D8B4 /* Pods_contact_core_date.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDCD092D35001783B76F2B1 /* Pods_contact_core_date.framework */; };
 		518FE6B7232CC6D600030B49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6B6232CC6D600030B49 /* AppDelegate.swift */; };
 		518FE6B9232CC6D600030B49 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6B8232CC6D600030B49 /* ContactListViewController.swift */; };
 		518FE6BC232CC6D600030B49 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518FE6BA232CC6D600030B49 /* Main.storyboard */; };
@@ -20,7 +21,6 @@
 		518FE6DB232D093B00030B49 /* PhoneNumberVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6DA232D093B00030B49 /* PhoneNumberVO.swift */; };
 		518FE6DD232D095400030B49 /* AddressVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6DC232D095400030B49 /* AddressVO.swift */; };
 		518FE6DF232D096A00030B49 /* EmailVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6DE232D096A00030B49 /* EmailVO.swift */; };
-		518FE6E1232D0ECF00030B49 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518FE6E0232D0ECF00030B49 /* Repository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,9 @@
 		518FE6DA232D093B00030B49 /* PhoneNumberVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberVO.swift; sourceTree = "<group>"; };
 		518FE6DC232D095400030B49 /* AddressVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressVO.swift; sourceTree = "<group>"; };
 		518FE6DE232D096A00030B49 /* EmailVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVO.swift; sourceTree = "<group>"; };
-		518FE6E0232D0ECF00030B49 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		C3A77139693117080ED2289B /* Pods-contact-core-date.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-contact-core-date.debug.xcconfig"; path = "Target Support Files/Pods-contact-core-date/Pods-contact-core-date.debug.xcconfig"; sourceTree = "<group>"; };
+		DCDCD092D35001783B76F2B1 /* Pods_contact_core_date.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_contact_core_date.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1DCD6C4DD945D17FD9D0BA4 /* Pods-contact-core-date.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-contact-core-date.release.xcconfig"; path = "Target Support Files/Pods-contact-core-date/Pods-contact-core-date.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,17 +49,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4721ADBAA740CAA81D45D8B4 /* Pods_contact_core_date.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DF8F45B8DCE2767DC766690 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C3A77139693117080ED2289B /* Pods-contact-core-date.debug.xcconfig */,
+				F1DCD6C4DD945D17FD9D0BA4 /* Pods-contact-core-date.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		4EE83645A37383455F9E9F5E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCDCD092D35001783B76F2B1 /* Pods_contact_core_date.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		518FE6AA232CC6D600030B49 = {
 			isa = PBXGroup;
 			children = (
 				518FE6B5232CC6D600030B49 /* contact-core-date */,
 				518FE6B4232CC6D600030B49 /* Products */,
+				2DF8F45B8DCE2767DC766690 /* Pods */,
+				4EE83645A37383455F9E9F5E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				518FE6D7232D08CC00030B49 /* vos */,
-				518FE6E0232D0ECF00030B49 /* Repository.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -154,9 +175,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 518FE6C5232CC6DC00030B49 /* Build configuration list for PBXNativeTarget "contact-core-date" */;
 			buildPhases = (
+				CF511D61D424ED26E2586CA3 /* [CP] Check Pods Manifest.lock */,
 				518FE6AF232CC6D600030B49 /* Sources */,
 				518FE6B0232CC6D600030B49 /* Frameworks */,
 				518FE6B1232CC6D600030B49 /* Resources */,
+				6524DE3FA61126AAE0DDD847 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -213,6 +236,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6524DE3FA61126AAE0DDD847 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-contact-core-date/Pods-contact-core-date-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-contact-core-date/Pods-contact-core-date-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-contact-core-date/Pods-contact-core-date-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF511D61D424ED26E2586CA3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-contact-core-date-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		518FE6AF232CC6D600030B49 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -223,7 +288,6 @@
 				518FE6CE232CC84C00030B49 /* ContactTableViewCell.swift in Sources */,
 				518FE6D5232CD99200030B49 /* ContactDetailsViewController.swift in Sources */,
 				518FE6D9232D08DC00030B49 /* ContactVO.swift in Sources */,
-				518FE6E1232D0ECF00030B49 /* Repository.swift in Sources */,
 				518FE6DD232D095400030B49 /* AddressVO.swift in Sources */,
 				518FE6D0232CCD7E00030B49 /* AddNewContactViewController.swift in Sources */,
 				518FE6D3232CD4CE00030B49 /* WidgetGenerator.swift in Sources */,
@@ -372,6 +436,7 @@
 		};
 		518FE6C6232CC6DC00030B49 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3A77139693117080ED2289B /* Pods-contact-core-date.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -389,6 +454,7 @@
 		};
 		518FE6C7232CC6DC00030B49 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1DCD6C4DD945D17FD9D0BA4 /* Pods-contact-core-date.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

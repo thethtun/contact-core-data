@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct AddressVO {
-    let fullAddress: String
+class AddressVO : Object {
+    @objc dynamic var fullAddress: String?
 }

@@ -7,8 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
 
-
-struct PhoneNumberVO {
-    let number : String
+class PhoneNumberVO : Object {
+    @objc dynamic var number : String?
 }
