@@ -43,20 +43,20 @@ class ContactDetailsViewController: UIViewController {
             label.text = vo.number
             stackViewPhoneNumbers.addArrangedSubview(label)
         }
-        
-        stackViewEmails.removeAllArrangeSubViews()
-        data.emails.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.address
-            stackViewEmails.addArrangedSubview(label)
-        }
-        
-        stackViewAddress.removeAllArrangeSubViews()
-        data.addresses.forEach { (vo) in
-            let label = WidgetGenerator.getUILabelContactDetails()
-            label.text = vo.fullAddress
-            stackViewAddress.addArrangedSubview(label)
-        }
+//        
+//        stackViewEmails.removeAllArrangeSubViews()
+//        data.emails.forEach { (vo) in
+//            let label = WidgetGenerator.getUILabelContactDetails()
+//            label.text = vo.address
+//            stackViewEmails.addArrangedSubview(label)
+//        }
+//        
+//        stackViewAddress.removeAllArrangeSubViews()
+//        data.addresses.forEach { (vo) in
+//            let label = WidgetGenerator.getUILabelContactDetails()
+//            label.text = vo.fullAddress
+//            stackViewAddress.addArrangedSubview(label)
+//        }
     }
     
     @objc func onClickEditDetails(_ sender : Any) {

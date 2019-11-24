@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,8 @@
 		51F6D645238A2E0B00ABF694 /* contact_core_dateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D644238A2E0B00ABF694 /* contact_core_dateUITests.swift */; };
 		51F6D64D238A333300ABF694 /* VOUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D64C238A333300ABF694 /* VOUtils.swift */; };
 		51F6D655238A368700ABF694 /* addContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D654238A368700ABF694 /* addContact.swift */; };
+		51F6D65E238A4B5000ABF694 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D65D238A4B5000ABF694 /* BaseViewModel.swift */; };
+		51F6D660238A4BA200ABF694 /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D65F238A4BA200ABF694 /* ContactListViewModel.swift */; };
 		959ED6EFB86FB21015333D87 /* Pods_contact_core_date.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 303057851689770FA8FC72AC /* Pods_contact_core_date.framework */; };
 		9DC865FAC1613C480C5CE6E1 /* Pods_contact_core_dateTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E593DFA3C947F74A42DC91 /* Pods_contact_core_dateTests.framework */; };
 		FFB9BD0A09F18232C4519DF2 /* Pods_contact_core_dateUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8BB55F4755CDA9E5FF453EB /* Pods_contact_core_dateUITests.framework */; };
@@ -80,6 +82,8 @@
 		51F6D646238A2E0B00ABF694 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51F6D64C238A333300ABF694 /* VOUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VOUtils.swift; sourceTree = "<group>"; };
 		51F6D654238A368700ABF694 /* addContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addContact.swift; sourceTree = "<group>"; };
+		51F6D65D238A4B5000ABF694 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		51F6D65F238A4BA200ABF694 /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
 		8CB7DE93379E07624691FE8B /* Pods-contact-core-dateTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-contact-core-dateTests.release.xcconfig"; path = "Target Support Files/Pods-contact-core-dateTests/Pods-contact-core-dateTests.release.xcconfig"; sourceTree = "<group>"; };
 		9C0B3D1645821FB61E9B1594 /* Pods-contact-core-dateUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-contact-core-dateUITests.debug.xcconfig"; path = "Target Support Files/Pods-contact-core-dateUITests/Pods-contact-core-dateUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8BB55F4755CDA9E5FF453EB /* Pods_contact_core_dateUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_contact_core_dateUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +245,8 @@
 		51F6D65C238A49F900ABF694 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				51F6D65D238A4B5000ABF694 /* BaseViewModel.swift */,
+				51F6D65F238A4BA200ABF694 /* ContactListViewModel.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -265,7 +271,6 @@
 				9C0B3D1645821FB61E9B1594 /* Pods-contact-core-dateUITests.debug.xcconfig */,
 				35303D5A0A79132FDF0C20C6 /* Pods-contact-core-dateUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -490,11 +495,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51F6D660238A4BA200ABF694 /* ContactListViewModel.swift in Sources */,
 				518FE6B9232CC6D600030B49 /* ContactListViewController.swift in Sources */,
 				518FE6DF232D096A00030B49 /* EmailVO.swift in Sources */,
 				518FE6CE232CC84C00030B49 /* ContactTableViewCell.swift in Sources */,
 				518FE6D5232CD99200030B49 /* ContactDetailsViewController.swift in Sources */,
 				518FE6D9232D08DC00030B49 /* ContactVO.swift in Sources */,
+				51F6D65E238A4B5000ABF694 /* BaseViewModel.swift in Sources */,
 				518FE6E1232D0ECF00030B49 /* Repository.swift in Sources */,
 				518FE6DD232D095400030B49 /* AddressVO.swift in Sources */,
 				518FE6D0232CCD7E00030B49 /* AddNewContactViewController.swift in Sources */,

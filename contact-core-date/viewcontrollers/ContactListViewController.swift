@@ -7,39 +7,61 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ContactListViewController: UIViewController {
-
+    
     @IBOutlet weak var tableViewContactList : UITableView!
     
+    let viewModel = ContactListViewModel()
+    
+    let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        tableViewContactList.dataSource = self
-        tableViewContactList.delegate = self
-        
         navigationItem.leftBarButtonItem = editButtonItem
+        
+        
+        viewModel.contactList.observeOn(MainScheduler.instance)
+            .bind(to: tableViewContactList.rx.items) { tableView, index, item in
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: IndexPath(row: index, section: 0)) as? ContactTableViewCell else {
+                    return UITableViewCell()
+                }
+                cell.selectionStyle = .none
+                cell.data = item
+                return cell
+        }.disposed(by: bag)
+        
+        
+        tableViewContactList.rx.modelSelected(ContactVO.self)
+            .subscribe(onNext : { data in
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: String(describing : ContactDetailsViewController.self)) as! ContactDetailsViewController
+                vc.data = data
+                vc.modalPresentationStyle = .fullScreen
+                vc.onContactUpdated = { [weak self] (data) in
+                    self?.viewModel.updateContact(data: data)
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            }).disposed(by: bag)
+        
+        
+        tableViewContactList.rx.itemDeleted
+            .subscribe(onNext : { indexPath in
+                self.viewModel.deleteContact(data: self.viewModel.getContact(index: indexPath.row))
+            }).disposed(by: bag)
+        
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? AddNewContactViewController {
-            
             vc.onNewContactAdded = { [weak self] (data) in
-                tempContactList.append(data)
-                self?.tableViewContactList.reloadData()
-            }
-            
-
-        } else if let vc = segue.destination as? ContactDetailsViewController {
-            if let indexPath = tableViewContactList.indexPathForSelectedRow {
-                vc.selectedIndexPath = indexPath
-                vc.data = tempContactList[indexPath.row]
-                vc.onContactUpdated = { [weak self] (data) in
-                    tempContactList[indexPath.row] = data
-                }
+                self?.viewModel.addContact(data: data)
             }
         }
     }
@@ -48,43 +70,7 @@ class ContactListViewController: UIViewController {
         super.setEditing(editing, animated: animated)
         tableViewContactList.setEditing(editing, animated: animated)
     }
-
-
+    
 }
 
-extension ContactListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tempContactList.count;
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: indexPath) as? ContactTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.selectionStyle = .none
-        cell.data = tempContactList[indexPath.row]
-        
-        return cell
-    }
-}
-
-
-
-extension ContactListViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete: deleteContact(at : indexPath)
-        default:()
-        }
-    }
-    
-    func deleteContact(at indexPath : IndexPath) {
-        tempContactList.remove(at: indexPath.row)
-        tableViewContactList.reloadData()
-    }
-}
 

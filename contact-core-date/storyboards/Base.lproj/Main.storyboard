@@ -46,7 +46,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="labelUserName" destination="skM-6b-g5a" id="B0C-nC-gE8"/>
-                                            <segue destination="cNd-CY-7Wp" kind="show" id="LmI-h9-0l6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -82,7 +81,7 @@
         <!--Contact Details View Controller-->
         <scene sceneID="k3y-Z5-ZsY">
             <objects>
-                <viewController id="cNd-CY-7Wp" customClass="ContactDetailsViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactDetailsViewController" id="cNd-CY-7Wp" customClass="ContactDetailsViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TwF-am-nIz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -450,6 +449,6 @@
         <image name="icons8-contacts_filled" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1pl-hY-cCC"/>
+        <segue reference="uxu-ta-Rm8"/>
     </inferredMetricsTieBreakers>
 </document>
