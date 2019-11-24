@@ -28,7 +28,7 @@ class ContactListViewModelTest: XCTestCase {
         viewModel.contactList.subscribe(onNext: { (contacts) in
             XCTAssert(contacts.count == 1, "Contact Inserted")
             
-            //Also name, phone, address
+            ///Also test name, phone, address
         }, onError: { (error) in
             XCTFail(error.localizedDescription)
         }, onCompleted: {

@@ -30,6 +30,7 @@
 		51F6D65E238A4B5000ABF694 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D65D238A4B5000ABF694 /* BaseViewModel.swift */; };
 		51F6D660238A4BA200ABF694 /* ContactListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D65F238A4BA200ABF694 /* ContactListViewModel.swift */; };
 		51F6D667238A600600ABF694 /* ContactListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D666238A600600ABF694 /* ContactListViewModelTest.swift */; };
+		51F6D669238A6DC100ABF694 /* NetworkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D668238A6DC100ABF694 /* NetworkTest.swift */; };
 		959ED6EFB86FB21015333D87 /* Pods_contact_core_date.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 303057851689770FA8FC72AC /* Pods_contact_core_date.framework */; };
 		9DC865FAC1613C480C5CE6E1 /* Pods_contact_core_dateTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E593DFA3C947F74A42DC91 /* Pods_contact_core_dateTests.framework */; };
 		FFB9BD0A09F18232C4519DF2 /* Pods_contact_core_dateUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8BB55F4755CDA9E5FF453EB /* Pods_contact_core_dateUITests.framework */; };
@@ -86,6 +87,7 @@
 		51F6D65D238A4B5000ABF694 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		51F6D65F238A4BA200ABF694 /* ContactListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModel.swift; sourceTree = "<group>"; };
 		51F6D666238A600600ABF694 /* ContactListViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewModelTest.swift; sourceTree = "<group>"; };
+		51F6D668238A6DC100ABF694 /* NetworkTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTest.swift; sourceTree = "<group>"; };
 		8CB7DE93379E07624691FE8B /* Pods-contact-core-dateTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-contact-core-dateTests.release.xcconfig"; path = "Target Support Files/Pods-contact-core-dateTests/Pods-contact-core-dateTests.release.xcconfig"; sourceTree = "<group>"; };
 		9C0B3D1645821FB61E9B1594 /* Pods-contact-core-dateUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-contact-core-dateUITests.debug.xcconfig"; path = "Target Support Files/Pods-contact-core-dateUITests/Pods-contact-core-dateUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8BB55F4755CDA9E5FF453EB /* Pods_contact_core_dateUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_contact_core_dateUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,6 +233,7 @@
 				51F6D63C238A2BF900ABF694 /* ViewControllerTest.swift */,
 				51F6D64C238A333300ABF694 /* VOUtils.swift */,
 				51F6D666238A600600ABF694 /* ContactListViewModelTest.swift */,
+				51F6D668238A6DC100ABF694 /* NetworkTest.swift */,
 			);
 			path = "contact-core-dateTests";
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				51F6D633238A14CF00ABF694 /* contact_core_dateTests.swift in Sources */,
 				51F6D64D238A333300ABF694 /* VOUtils.swift in Sources */,
 				51F6D63D238A2BF900ABF694 /* ViewControllerTest.swift in Sources */,
+				51F6D669238A6DC100ABF694 /* NetworkTest.swift in Sources */,
 				51F6D667238A600600ABF694 /* ContactListViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
