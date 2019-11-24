@@ -27,4 +27,5 @@ struct ContactVO {
         self.emails = emails
         self.addresses = addresses
     }
+    
 }

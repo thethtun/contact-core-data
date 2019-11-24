@@ -10,3 +10,8 @@ import Foundation
 
 
 var tempContactList : [ContactVO] = []
+
+
+func preloadData() {
+    tempContactList.append(ContactVO(username: "Zaw Zin", phoneNumbers: [PhoneNumberVO](), emails: [EmailVO](), addresses: [AddressVO]()))
+}

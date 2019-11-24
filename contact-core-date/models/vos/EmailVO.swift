@@ -9,5 +9,10 @@
 import Foundation
 
 struct EmailVO {
-    let address : String
+    var address : String
+    
+    init(address : String) {
+//        self.address = "\(address) [modified]"
+        self.address = address
+    }
 }
