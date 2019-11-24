@@ -1,0 +1,6 @@
+framework module Pods_contact_core_dateTests {
+  umbrella header "Pods-contact-core-dateTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
