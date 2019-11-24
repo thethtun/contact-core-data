@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class AddEditContactViewController: UIViewController {
-
+    
     @IBOutlet weak var textFieldUserName : UITextField!
     @IBOutlet weak var stackViewAddPhone : UIStackView!
     @IBOutlet weak var stackViewAddEmail : UIStackView!
@@ -19,7 +19,7 @@ class AddEditContactViewController: UIViewController {
     
     private var editingContact : ContactVO?
     private var existingPhoneNumbers : [PhoneNumberVO]?
-
+    
     
     var onNewContactAdded : ((ContactVO) -> Void)?
     var onContactUpdated : ((ContactVO) -> Void)?
@@ -39,7 +39,7 @@ class AddEditContactViewController: UIViewController {
             onViewLoaded()
         }
     }
-
+    
     @IBAction func addPhoneNumber(_ sender : Any) {
         let textField = WidgetGenerator.getUITextField(contentType: .creditCardNumber)
         stackViewAddPhone.insertArrangedSubview(textField, at: 0)
@@ -91,17 +91,17 @@ class AddEditContactViewController: UIViewController {
         
         
         stackViewAddPhone.arrangedSubviews.map { (view) -> UITextField? in
-                if view is UITextField {
-                    return view as? UITextField
-                }
-                return nil
-            }.compactMap { $0 }
+            if view is UITextField {
+                return view as? UITextField
+            }
+            return nil
+        }.compactMap { $0 }
             .map { (textField) -> String? in
                 if textField.text != nil && !textField.text!.isEmpty {
                     return textField.text!
                 }
                 return nil
-            }.compactMap { $0 }
+        }.compactMap { $0 }
             .forEach { (value)  in
                 let vo = PhoneNumberVO(context: DataController.shared.viewContext!)
                 vo.number = value
@@ -110,46 +110,8 @@ class AddEditContactViewController: UIViewController {
                 vo.contact = contactRef
                 
                 try? DataController.shared.viewContext?.save()
-            }
-        
-        
-        
-//        let emailVOs = stackViewAddEmail.arrangedSubviews.map { (view) -> UITextField? in
-//            if view is UITextField {
-//                return view as? UITextField
-//            }
-//            return nil
-//            }.compactMap { $0 }
-//            .map { (textField) -> String? in
-//                if textField.text != nil && !textField.text!.isEmpty {
-//                    return textField.text!
-//                }
-//                return nil
-//            }.compactMap { $0 }
-//            .map { (value) -> EmailVO in
-//                let vo = EmailVO(address: value)
-//                return vo
-//        }
-        
-        
-//        let addressVOs = stackViewAddAddress.arrangedSubviews.map { (view) -> UITextField? in
-//            if view is UITextField {
-//                return view as? UITextField
-//            }
-//            return nil
-//            }.compactMap { $0 }
-//            .map { (textField) -> String? in
-//                if textField.text != nil && !textField.text!.isEmpty {
-//                    return textField.text!
-//                }
-//                return nil
-//            }.compactMap { $0 }
-//            .map { (value) -> AddressVO in
-//                let vo = AddressVO(fullAddress: value)
-//                return vo
-//        }
-        
-        
+        }
+    
         if isEditingMode {
             self.onContactUpdated!(contactRef!)
         } else {
@@ -182,18 +144,6 @@ class AddEditContactViewController: UIViewController {
             }
         }
         
-
-//        data.emails.forEach { (data) in
-//            let textField = WidgetGenerator.getUITextField(contentType: .emailAddress)
-//            textField.text = data.address
-//            stackViewAddEmail.insertArrangedSubview(textField, at: 0)
-//        }
-//
-//        data.addresses.forEach { (data) in
-//            let textField = WidgetGenerator.getUITextField(contentType: .fullStreetAddress)
-//            textField.text = data.fullAddress
-//            stackViewAddAddress.insertArrangedSubview(textField, at: 0)
-//        }
     }
     
     func showError(message : String?) {
@@ -203,7 +153,7 @@ class AddEditContactViewController: UIViewController {
         }))
         self.present(controller, animated: true, completion: nil)
     }
-
+    
 }
 
 
