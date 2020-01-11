@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2b3-qh-JLa">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2b3-qh-JLa">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,18 +17,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LeU-89-oxY">
-                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ContactTableViewCell" id="Nwh-pI-2KQ" customClass="ContactTableViewCell" customModule="contact_core_date" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="52.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nwh-pI-2KQ" id="i1r-pf-3If">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="43.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nwh-pI-2KQ" id="i1r-pf-3If">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="52.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skM-6b-g5a">
-                                                    <rect key="frame" x="25" y="16" width="338" height="20"/>
+                                                    <rect key="frame" x="25" y="16" width="345" height="20.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="cfT-AD-NN8"/>
                                                     </constraints>
@@ -48,7 +46,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="labelUserName" destination="skM-6b-g5a" id="B0C-nC-gE8"/>
-                                            <segue destination="cNd-CY-7Wp" kind="show" id="LmI-h9-0l6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -67,9 +64,7 @@
                     <navigationItem key="navigationItem" title="Contacts" id="sEe-6d-Zb2">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="u5h-vc-6mo">
                             <connections>
-                                <segue destination="4II-g4-NLE" kind="popoverPresentation" popoverAnchorBarButtonItem="u5h-vc-6mo" id="1pl-hY-cCC">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
+                                <action selector="onClickAddNewContact:" destination="BYZ-38-t0r" id="AhY-Ct-0he"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -84,7 +79,7 @@
         <!--Contact Details View Controller-->
         <scene sceneID="k3y-Z5-ZsY">
             <objects>
-                <viewController id="cNd-CY-7Wp" customClass="ContactDetailsViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactDetailsViewController" id="cNd-CY-7Wp" customClass="ContactDetailsViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TwF-am-nIz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -188,18 +183,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ISg-7C-1kZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3992.753623188406" y="569.86607142857144"/>
+            <point key="canvasLocation" x="1958" y="787"/>
         </scene>
         <!--Add New Contact View Controller-->
         <scene sceneID="Mcw-zl-4h2">
             <objects>
-                <viewController id="4II-g4-NLE" customClass="AddNewContactViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddNewContactViewController" id="4II-g4-NLE" customClass="AddNewContactViewController" customModule="contact_core_date" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bN9-5e-rTu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeg-fU-zrK">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="b8S-0K-yhZ"/>
                                 </constraints>
@@ -220,7 +215,7 @@
                                 </items>
                             </navigationBar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3u5-OX-ixx">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="764"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="PSU-uY-Udh">
                                         <rect key="frame" x="20" y="20" width="374" height="231.5"/>
@@ -230,7 +225,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="nQl-mz-tWj"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                                             </textField>
@@ -406,7 +400,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9nS-fG-Y8h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5086" y="120"/>
+            <point key="canvasLocation" x="2893" y="787"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="KHp-W4-BCH">
@@ -414,6 +408,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="2b3-qh-JLa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kz1-UB-P0N">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -451,7 +446,4 @@
         <image name="icons8-add" width="48" height="48"/>
         <image name="icons8-contacts_filled" width="50" height="50"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="uxu-ta-Rm8"/>
-    </inferredMetricsTieBreakers>
 </document>

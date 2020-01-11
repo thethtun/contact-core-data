@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ContactListViewController: UIViewController {
-
+class ContactListViewController: UIViewController, AddNewContactViewControllerDelegate {
+    
     @IBOutlet weak var tableViewContactList : UITableView!
     
     
@@ -23,32 +23,31 @@ class ContactListViewController: UIViewController {
         navigationItem.leftBarButtonItem = editButtonItem
     }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? AddNewContactViewController {
-            
-            vc.onNewContactAdded = { [weak self] (data) in
-                tempContactList.append(data)
-                self?.tableViewContactList.reloadData()
-            }
-            
-
-        } else if let vc = segue.destination as? ContactDetailsViewController {
-            if let indexPath = tableViewContactList.indexPathForSelectedRow {
-                vc.selectedIndexPath = indexPath
-                vc.data = tempContactList[indexPath.row]
-                vc.onContactUpdated = { [weak self] (data) in
-                    tempContactList[indexPath.row] = data
-                }
-            }
-        }
-    }
-    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         tableViewContactList.setEditing(editing, animated: animated)
     }
 
+    func onNewContactAdded(_ data: ContactVO) {
+        tempContactList.append(data)
+        self.tableViewContactList.reloadData()
+    }
+    
+    func onContactUpdated(_ data: ContactVO) {
+        tempContactList = tempContactList.map { (contact) -> ContactVO in
+            if(contact.username == data.username) {
+                return data
+            }
+            return contact
+        }
+    }
+    
+    @IBAction func onClickAddNewContact(_ sender : Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddNewContactViewController") as! AddNewContactViewController
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
 
 }
 
@@ -75,6 +74,13 @@ extension ContactListViewController: UITableViewDataSource {
 
 
 extension ContactListViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ContactDetailsViewController") as! ContactDetailsViewController
+        vc.selectedIndexPath = indexPath
+        vc.data = tempContactList[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete: deleteContact(at : indexPath)

@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol AddNewContactViewControllerDelegate {
+    func onNewContactAdded(_ data : ContactVO)
+    func onContactUpdated(_ data : ContactVO)
+}
+
 class AddNewContactViewController: UIViewController {
 
     @IBOutlet weak var textFieldUserName : UITextField!
@@ -21,6 +26,8 @@ class AddNewContactViewController: UIViewController {
     var onViewLoaded : (() -> Void)?
     
     var isEditingMode : Bool = false
+    
+    var delegate : AddNewContactViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,9 +124,9 @@ class AddNewContactViewController: UIViewController {
         
         
         if isEditingMode {
-            self.onContactUpdated!(contactVO)
+            delegate?.onNewContactAdded(contactVO)
         } else {
-            self.onNewContactAdded!(contactVO)
+            delegate?.onContactUpdated(contactVO)
         }
         
         self.dismiss(animated: true, completion: nil)
