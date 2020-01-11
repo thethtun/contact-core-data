@@ -62,11 +62,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Contacts" id="sEe-6d-Zb2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="u5h-vc-6mo">
-                            <connections>
-                                <action selector="onClickAddNewContact:" destination="BYZ-38-t0r" id="AhY-Ct-0he"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="u5h-vc-6mo"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableViewContactList" destination="LeU-89-oxY" id="yhO-ne-Tg0"/>
