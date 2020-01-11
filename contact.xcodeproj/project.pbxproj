@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		518FE6B3232CC6D600030B49 /* contact-core-date.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "contact-core-date.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		518FE6B3232CC6D600030B49 /* Contact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Contact.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		518FE6B6232CC6D600030B49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		518FE6B8232CC6D600030B49 /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		518FE6BB232CC6D600030B49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 		518FE6B4232CC6D600030B49 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				518FE6B3232CC6D600030B49 /* contact-core-date.app */,
+				518FE6B3232CC6D600030B49 /* Contact.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,9 +150,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		518FE6B2232CC6D600030B49 /* contact-core-date */ = {
+		518FE6B2232CC6D600030B49 /* contact */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 518FE6C5232CC6DC00030B49 /* Build configuration list for PBXNativeTarget "contact-core-date" */;
+			buildConfigurationList = 518FE6C5232CC6DC00030B49 /* Build configuration list for PBXNativeTarget "contact" */;
 			buildPhases = (
 				518FE6AF232CC6D600030B49 /* Sources */,
 				518FE6B0232CC6D600030B49 /* Frameworks */,
@@ -162,9 +162,9 @@
 			);
 			dependencies = (
 			);
-			name = "contact-core-date";
+			name = contact;
 			productName = "contact-core-date";
-			productReference = 518FE6B3232CC6D600030B49 /* contact-core-date.app */;
+			productReference = 518FE6B3232CC6D600030B49 /* Contact.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -182,7 +182,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 518FE6AE232CC6D600030B49 /* Build configuration list for PBXProject "contact-core-date" */;
+			buildConfigurationList = 518FE6AE232CC6D600030B49 /* Build configuration list for PBXProject "contact" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -195,7 +195,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				518FE6B2232CC6D600030B49 /* contact-core-date */,
+				518FE6B2232CC6D600030B49 /* contact */,
 			);
 		};
 /* End PBXProject section */
@@ -380,8 +380,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mm.padc.contact-core-date";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm.padc.contact;
+				PRODUCT_NAME = Contact;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -397,8 +397,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mm.padc.contact-core-date";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm.padc.contact;
+				PRODUCT_NAME = Contact;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -407,7 +407,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		518FE6AE232CC6D600030B49 /* Build configuration list for PBXProject "contact-core-date" */ = {
+		518FE6AE232CC6D600030B49 /* Build configuration list for PBXProject "contact" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				518FE6C3232CC6DC00030B49 /* Debug */,
@@ -416,7 +416,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		518FE6C5232CC6DC00030B49 /* Build configuration list for PBXNativeTarget "contact-core-date" */ = {
+		518FE6C5232CC6DC00030B49 /* Build configuration list for PBXNativeTarget "contact" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				518FE6C6232CC6DC00030B49 /* Debug */,

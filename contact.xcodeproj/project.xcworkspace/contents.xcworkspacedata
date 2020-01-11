@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:contact-core-date.xcodeproj">
+      location = "self:/Users/thethtun/XCodeProjects/contact-core-date/contact.xcodeproj">
    </FileRef>
 </Workspace>
