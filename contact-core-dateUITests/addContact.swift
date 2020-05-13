@@ -34,7 +34,7 @@ class addContact: XCTestCase {
     func test_AddContact() {
         
         let app = XCUIApplication()
-        
+
         app.navigationBars["Contacts"].buttons["Add"].tap()
         
         
