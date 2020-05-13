@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:ContactSwiftUI/ContactSwiftUI.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:contact-core-date.xcodeproj">
    </FileRef>
    <FileRef
