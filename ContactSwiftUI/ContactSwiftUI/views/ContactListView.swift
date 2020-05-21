@@ -19,7 +19,9 @@ struct ContactListView: View {
     var body: some View {
         NavigationView {
             List(contacts, id: \.id) { (data: UserContact) in
-                Text(data.name ?? "???")
+                NavigationLink(destination: ContactDetailsView(data: data)) {
+                    Text(data.name ?? "???")
+                }
             }
             .navigationBarTitle("Contacts")
             .navigationBarItems(leading:

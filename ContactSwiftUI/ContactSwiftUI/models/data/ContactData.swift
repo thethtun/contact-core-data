@@ -16,10 +16,11 @@ struct ContactVO : Identifiable {
 }
 
 class PhoneNumberVO : Identifiable, ObservableObject {
-    let id : String = UUID().uuidString
+    var id : String
     @Published var number : String
     
-    init(number : String) {
+    init(id : String = UUID().uuidString, number : String) {
+        self.id = id
         self.number = number
     }
 }

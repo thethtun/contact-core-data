@@ -29,5 +29,24 @@ class DatabaseManager {
             print("failed to save")
         }
     }
+    
+    func updateUserContact(oldData : UserContact, newData: ContactVO) {
+        let context = CoreDataStack.shared.viewContext
+        oldData.name = newData.name
+        
+        oldData.phone_numbers = nil
+        newData.phoneNumbers.forEach { (item) in
+            let phoneNumber = UserPhoneNumber(context: context)
+            phoneNumber.id = item.id
+            phoneNumber.number = item.number
+            oldData.addToPhone_numbers(phoneNumber)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            print("failed to save")
+        }
+    }
   
 }

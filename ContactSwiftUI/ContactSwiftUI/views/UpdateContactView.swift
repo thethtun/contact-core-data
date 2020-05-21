@@ -1,20 +1,20 @@
-//
-//  AddContactView.swift
-//  ContactSwiftUI
-//
-//  Created by Thet Htun on 5/13/20.
-//  Copyright © 2020 thethtun. All rights reserved.
-//
-
-import SwiftUI
-
-struct AddContactView: View {
+ //
+ //  UpdateContactView.swift
+ //  ContactSwiftUI
+ //
+ //  Created by Thet Htun on 5/22/20.
+ //  Copyright © 2020 thethtun. All rights reserved.
+ //
+ 
+ import SwiftUI
+ 
+ struct UpdateContactView: View {
     
+    var userContact : UserContact
     @Binding var isPresented : Bool
-    
     @State private var showAlert : Bool = false
-    @State private var userName : String = ""
-    @State private var phoneNumberStates = [PhoneNumberVO]()
+    @State var userName : String
+    @State var phoneNumberStates : [PhoneNumberVO]
     @State private var alertTitle: String = "Attention"
     @State private var alertMessage : String = "Error"
     
@@ -27,14 +27,14 @@ struct AddContactView: View {
                         TextFieldPhoneNumber()
                             .environmentObject(value)
                     }
-                    
                     AddPhoneActionView(phoneNumberStates: $phoneNumberStates)
+                    Divider()
                 }
                 .padding(.leading, 15)
                 .padding(.trailing, 15)
                 Spacer()
             }.padding(.top, 15)
-                .navigationBarTitle("Add Contact", displayMode: .inline)
+                .navigationBarTitle("Edit Contact", displayMode: .inline)
                 .navigationBarItems(leading:
                     Button(action: {
                         self.isPresented.toggle()
@@ -42,7 +42,7 @@ struct AddContactView: View {
                         Text("Cancel")
                     }), trailing:
                     Button(action: {
-                        self.addContact()
+                        self.updateContact()
                     }, label: {
                         Text("Done")
                     }).alert(isPresented: $showAlert) {
@@ -52,7 +52,8 @@ struct AddContactView: View {
         }
     }
     
-    private func addContact() {
+    
+    private func updateContact() {
         if userName.isEmpty {
             self.alertMessage = "Please enter user name"
             self.showAlert = true
@@ -68,35 +69,21 @@ struct AddContactView: View {
             
             //save data
             let db = DatabaseManager()
-            db.saveUserContact(data: contactVO)
+            db.updateUserContact(oldData: self.userContact, newData: contactVO)
             
             //dismiss view
             self.isPresented.toggle()
         }
-        
     }
-}
-
-
-struct AddPhoneActionView : View {
-    @Binding var phoneNumberStates : [PhoneNumberVO]
-    
-    var body : some View {
-        HStack(spacing: 15) {
-            Image("icons8-add")
-                .resizable()    
-                .frame(width: 35, height: 35)
-            Text("add phone").font(Font.system(size: 15))
-            Spacer()
-        }.onTapGesture {
-            let vo = PhoneNumberVO(number: "")
-            self.phoneNumberStates.append(vo)
-        }
-    }
-}
-
-struct AddContactView_Previews: PreviewProvider {
+ }
+ 
+ struct UpdateContactView_Previews: PreviewProvider {
     static var previews: some View {
-        AddContactView(isPresented: .constant(true))
+        UpdateContactView(
+            userContact: UserContact(),
+            isPresented: .constant(true),
+            userName: "",
+            phoneNumberStates: [PhoneNumberVO]()
+        )
     }
-}
+ }

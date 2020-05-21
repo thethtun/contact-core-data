@@ -12,6 +12,8 @@
 		51637EF524770DA7005DFF9E /* TextFieldPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51637EF424770DA7005DFF9E /* TextFieldPhoneNumber.swift */; };
 		51637EF724770DCE005DFF9E /* TextFieldUserName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51637EF624770DCE005DFF9E /* TextFieldUserName.swift */; };
 		51637EF924770EBD005DFF9E /* ContactDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51637EF824770EBD005DFF9E /* ContactDetailsView.swift */; };
+		51637EFB24771460005DFF9E /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51637EFA24771460005DFF9E /* Divider.swift */; };
+		51637EFD247719C2005DFF9E /* UpdateContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51637EFC247719C2005DFF9E /* UpdateContactView.swift */; };
 		51F17091246C595500652FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F17090246C595500652FED /* AppDelegate.swift */; };
 		51F17093246C595500652FED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F17092246C595500652FED /* SceneDelegate.swift */; };
 		51F17096246C595500652FED /* ContactSwiftUI.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 51F17094246C595500652FED /* ContactSwiftUI.xcdatamodeld */; };
@@ -49,6 +51,8 @@
 		51637EF424770DA7005DFF9E /* TextFieldPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPhoneNumber.swift; sourceTree = "<group>"; };
 		51637EF624770DCE005DFF9E /* TextFieldUserName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldUserName.swift; sourceTree = "<group>"; };
 		51637EF824770EBD005DFF9E /* ContactDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsView.swift; sourceTree = "<group>"; };
+		51637EFA24771460005DFF9E /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
+		51637EFC247719C2005DFF9E /* UpdateContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateContactView.swift; sourceTree = "<group>"; };
 		51F1708D246C595500652FED /* ContactSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51F17090246C595500652FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		51F17092246C595500652FED /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 			children = (
 				51637EF424770DA7005DFF9E /* TextFieldPhoneNumber.swift */,
 				51637EF624770DCE005DFF9E /* TextFieldUserName.swift */,
+				51637EFA24771460005DFF9E /* Divider.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 				51F170C4246C5CD400652FED /* ContactListView.swift */,
 				51F170CA246C5F2200652FED /* AddContactView.swift */,
 				51637EF824770EBD005DFF9E /* ContactDetailsView.swift */,
+				51637EFC247719C2005DFF9E /* UpdateContactView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -336,6 +342,7 @@
 			files = (
 				51637EE02476FF7C005DFF9E /* DatabaseManager.swift in Sources */,
 				51F170C5246C5CD400652FED /* ContactListView.swift in Sources */,
+				51637EFB24771460005DFF9E /* Divider.swift in Sources */,
 				51F17091246C595500652FED /* AppDelegate.swift in Sources */,
 				51637EF724770DCE005DFF9E /* TextFieldUserName.swift in Sources */,
 				51637EF924770EBD005DFF9E /* ContactDetailsView.swift in Sources */,
@@ -345,6 +352,7 @@
 				51F17098246C595500652FED /* ContentView.swift in Sources */,
 				51F170CB246C5F2200652FED /* AddContactView.swift in Sources */,
 				51F17096246C595500652FED /* ContactSwiftUI.xcdatamodeld in Sources */,
+				51637EFD247719C2005DFF9E /* UpdateContactView.swift in Sources */,
 				51637EF524770DA7005DFF9E /* TextFieldPhoneNumber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
