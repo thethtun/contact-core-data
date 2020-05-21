@@ -18,16 +18,18 @@ struct ContactListView: View {
     
     var body: some View {
         NavigationView {
-            List(contacts, id: \.id) { (data: UserContact) in
-                NavigationLink(destination: ContactDetailsView(data: data)) {
-                    Text(data.name ?? "???")
+            List {
+                ForEach(contacts, id: \.id) { (data: UserContact) in
+                    NavigationLink(destination: ContactDetailsView(data: data)) {
+                        Text(data.name ?? "???")
+                    }
+                }.onDelete { (index) in
+                    self.deleteContact(at: index)
                 }
             }
             .navigationBarTitle("Contacts")
             .navigationBarItems(leading:
-                NavigationLink(destination: AddContactView(isPresented: $showAddNewContact), label: {
-                    Text("Edit")
-                })
+                EditButton()
                 , trailing:
                 Button(action: {
                     self.showAddNewContact.toggle()
@@ -41,16 +43,15 @@ struct ContactListView: View {
         
     }
     
-    /**
-     @State private var showAddNewContact : Bool = false
-     Button(action: {
-     self.showAddNewContact.toggle()
-     }, label: {
-     Image(systemName: "plus")
-     }).sheet(isPresented: $showAddNewContact, content: {
-     AddContactView()
-     })
-     */
+    func deleteContact(at offsets: IndexSet) {
+        if !contacts.isEmpty {
+            let deletingContact = contacts[(offsets.first) ?? 0]
+            
+            //Delete From Db
+            DatabaseManager().deleteUserContact(data: deletingContact)
+        }
+    }
+  
 }
 
 struct ContactListView_Previews: PreviewProvider {

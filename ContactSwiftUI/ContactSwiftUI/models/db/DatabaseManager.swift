@@ -22,11 +22,11 @@ class DatabaseManager {
             phoneNumber.number = item.number
             userContact.addToPhone_numbers(phoneNumber)
         }
-
+        
         do {
             try context.save()
         } catch {
-            print("failed to save")
+            print("failed to save contact")
         }
     }
     
@@ -34,7 +34,22 @@ class DatabaseManager {
         let context = CoreDataStack.shared.viewContext
         oldData.name = newData.name
         
-        oldData.phone_numbers = nil
+        /**
+         Current Logic
+         Delete all old phone
+         Add new phones
+         
+         Problems: Not really optimal!
+         Should only update the altered attributes
+         */
+        
+        //Delete old phone numbers
+        oldData.phone_numbers?.allObjects.forEach({ (item) in
+            let obj = item as! UserPhoneNumber
+            context.delete(obj)
+        })
+        
+        //Update new phone numbers
         newData.phoneNumbers.forEach { (item) in
             let phoneNumber = UserPhoneNumber(context: context)
             phoneNumber.id = item.id
@@ -45,8 +60,18 @@ class DatabaseManager {
         do {
             try context.save()
         } catch {
-            print("failed to save")
+            print("failed to update contact")
         }
     }
-  
+    
+    func deleteUserContact(data : UserContact) {
+        let context = CoreDataStack.shared.viewContext
+        do {
+            context.delete(data)
+            try context.save()
+        } catch {
+            print("Failed to delete contact : \(error.localizedDescription)")
+        }
+    }
+    
 }
