@@ -12,9 +12,9 @@ struct ContentView: View {
     var body: some View {
         TabView {
             ContactListView()
-            .tabItem {
-                Image(systemName: "person.crop.circle")
-                Text("Contact")
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Contact")
             }
         }
         

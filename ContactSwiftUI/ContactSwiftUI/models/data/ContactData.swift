@@ -8,7 +8,18 @@
 
 import Foundation
 
-struct ContactData : Identifiable {
-    let id : String
+
+struct ContactVO : Identifiable {
+    internal let id : String = UUID().uuidString
     let name : String
+    let phoneNumbers : [PhoneNumberVO]
+}
+
+class PhoneNumberVO : Identifiable, ObservableObject {
+    let id : String = UUID().uuidString
+    @Published var number : String
+    
+    init(number : String) {
+        self.number = number
+    }
 }

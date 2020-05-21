@@ -15,8 +15,8 @@ extension Reactive where Base: UINavigationItem {
     
     /// Bindable sink for `title` property.
     public var title: Binder<String?> {
-        return Binder(self.base) { navigationItem, text in
-            navigationItem.title = text
+        return Binder(self.base) { navigationItem, labelText in
+            navigationItem.title = labelText
         }
     }
         

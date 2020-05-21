@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="UserContact" representedClassName="UserContact" syncable="YES" codeGenerationType="class">
+        <attribute name="created_at" optional="YES" attributeType="Date" defaultDateTimeInterval="611778000" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="phone_numbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserPhoneNumber"/>
+    </entity>
+    <entity name="UserPhoneNumber" representedClassName="UserPhoneNumber" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="number" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="UserContact" positionX="-224.35546875" positionY="-12.08203125" width="128" height="103"/>
+        <element name="UserPhoneNumber" positionX="-28.25390625" positionY="-6.68359375" width="128" height="73"/>
+    </elements>
 </model>

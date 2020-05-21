@@ -10,26 +10,29 @@ import SwiftUI
 
 struct ContactListView: View {
     
-    let contacts = [
-        ContactData(id: "1", name: "Thet Tun"),
-        ContactData(id: "2", name: "Thet Oo"),
-    ]
-    
-    
+    @State private var showAddNewContact : Bool = false
+    @FetchRequest(
+        entity: UserContact.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "created_at", ascending: false)]
+    ) var contacts: FetchedResults<UserContact>
     
     var body: some View {
         NavigationView {
-            List(contacts) { data in
-                Text(data.name)
+            List(contacts, id: \.id) { (data: UserContact) in
+                Text(data.name ?? "???")
             }
             .navigationBarTitle("Contacts")
             .navigationBarItems(leading:
-                NavigationLink(destination: AddContactView(), label: {
+                NavigationLink(destination: AddContactView(isPresented: $showAddNewContact), label: {
                     Text("Edit")
                 })
                 , trailing:
-                NavigationLink(destination: AddContactView(), label: {
+                Button(action: {
+                    self.showAddNewContact.toggle()
+                }, label: {
                     Image(systemName: "plus")
+                }).sheet(isPresented: $showAddNewContact, content: {
+                    AddContactView(isPresented: self.$showAddNewContact)
                 })
             )
         }
