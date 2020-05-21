@@ -21,7 +21,7 @@ struct ContactListView: View {
             List {
                 ForEach(contacts, id: \.id) { (data: UserContact) in
                     NavigationLink(destination: ContactDetailsView(data: data)) {
-                        Text(data.name ?? "???")
+                        ContactListCell(data: data)
                     }
                 }.onDelete { (index) in
                     self.deleteContact(at: index)
@@ -52,6 +52,35 @@ struct ContactListView: View {
         }
     }
   
+}
+
+struct ContactListCell: View {
+    
+    let data : UserContact
+    
+    var body : some View {
+        HStack(spacing: 10) {
+            ZStack {
+                Color.random
+                    .clipShape(Circle())
+                Text(String((data.name ?? "??").first ?? "A").capitalized)
+                    .font(Font.system(size: 20))
+                    .foregroundColor(.white)
+                
+            }.frame(width: 50, height: 50)
+            Text(data.name ?? "???")
+        }
+    }
+}
+
+extension Color {
+    static var random: Color {
+        return Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
+    }
 }
 
 struct ContactListView_Previews: PreviewProvider {
